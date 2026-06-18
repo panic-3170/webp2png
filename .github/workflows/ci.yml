@@ -8,22 +8,22 @@ on:
     branches:
       - main
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs between concurrent deploys.
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  # ── Pull Request checks ────────────────────────────────────────────────────
   ci:
     name: Lint & Type Check
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
 
     steps:
       - name: Checkout
@@ -39,6 +39,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
+          cache-dependency-path: web/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -52,12 +53,14 @@ jobs:
       - name: Build
         run: pnpm generate
 
-  # ── GitHub Pages deployment (runs only on push to main) ──────────────────
   deploy:
     name: Deploy to GitHub Pages
     needs: ci
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    defaults:
+      run:
+        working-directory: web
 
     steps:
       - name: Checkout
@@ -73,6 +76,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
+          cache-dependency-path: web/pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -86,7 +90,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .output/public
+          path: web/.output/public
 
       - name: Deploy to GitHub Pages
         id: deployment
