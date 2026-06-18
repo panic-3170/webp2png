@@ -39,19 +39,23 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        working-directory: web
+        working-directory: ./web
+        shell: bash
 
       - name: Lint
         run: pnpm lint
-        working-directory: web
+        working-directory: ./web
+        shell: bash
 
       - name: Type check
         run: pnpm typecheck
-        working-directory: web
+        working-directory: ./web
+        shell: bash
 
       - name: Build
         run: pnpm generate
-        working-directory: web
+        working-directory: ./web
+        shell: bash
 
   deploy:
     name: Deploy to GitHub Pages
@@ -76,11 +80,13 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-        working-directory: web
+        working-directory: ./web
+        shell: bash
 
       - name: Build
         run: pnpm generate
-        working-directory: web
+        working-directory: ./web
+        shell: bash
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
@@ -88,7 +94,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: web/.output/public
+          path: ./web/.output/public
 
       - name: Deploy to GitHub Pages
         id: deployment
