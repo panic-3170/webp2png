@@ -12,8 +12,10 @@ const navLinks = [
 ]
 
 const isActive = (to: string) => {
-  if (to === '/') return route.path === '/'
-  return route.path.startsWith(to)
+  const base = useRuntimeConfig().app.baseURL || '/'
+  const normalizedPath = route.path.replace(base, '/')
+  if (to === '/') return normalizedPath === '/'
+  return normalizedPath.startsWith(to)
 }
 
 const closeMenu = () => (menuOpen.value = false)
