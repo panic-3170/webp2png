@@ -1,0 +1,59 @@
+<script setup lang="ts">
+import type { Component } from 'vue'
+
+const props = defineProps<{
+  to: string
+  icon: Component
+  name: string
+  description: string
+  badge?: string
+  disabled?: boolean
+}>()
+</script>
+
+<template>
+  <component
+    :is="disabled ? 'div' : 'a'"
+    :href="disabled ? undefined : to"
+    :class="['block rounded-md transition-colors duration-100', disabled && 'cursor-not-allowed']"
+    :style="{
+      background: 'var(--tk-surface)',
+      border: '1px solid var(--tk-border)',
+      padding: '24px',
+      opacity: disabled ? 0.6 : 1,
+    }"
+    @mouseover="(e) => { if (!disabled) (e.currentTarget as HTMLElement).style.borderColor = 'var(--tk-border-strong)' }"
+    @mouseleave="(e) => { if (!disabled) (e.currentTarget as HTMLElement).style.borderColor = 'var(--tk-border)' }"
+  >
+    <div class="flex items-start justify-between gap-2 mb-3">
+      <component
+        :is="icon"
+        :size="24"
+        class="mt-0.5 shrink-0"
+        style="color: var(--tk-text-secondary)"
+      />
+      <span
+        v-if="badge"
+        class="text-[12px]"
+        style="
+          background: var(--tk-surface-alt);
+          border: 1px solid var(--tk-border);
+          border-radius: 4px;
+          padding: 0 8px;
+          height: 20px;
+          display: inline-flex;
+          align-items: center;
+          color: var(--tk-text-tertiary);
+        "
+      >
+        {{ badge }}
+      </span>
+    </div>
+    <h3 class="mb-1" style="color: var(--tk-text-primary); font-size: 1.0625rem; font-weight: 600">
+      {{ name }}
+    </h3>
+    <p class="text-[14px] leading-relaxed" style="color: var(--tk-text-secondary)">
+      {{ description }}
+    </p>
+  </component>
+</template>

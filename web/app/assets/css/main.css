@@ -1,0 +1,150 @@
+/* ToolKit.run — design tokens & global styles
+ * Source of truth: doc/UI设计.md §3
+ * Layered so Tailwind utilities and component styles share the same variables.
+ */
+
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/* Design tokens (light)                                              */
+/* ------------------------------------------------------------------ */
+:root {
+  --tk-bg: #fafafa;
+  --tk-surface: #ffffff;
+  --tk-surface-alt: #f4f4f5;
+  --tk-text-primary: #18181b;
+  --tk-text-secondary: #52525b;
+  --tk-text-tertiary: #a1a1aa;
+  --tk-border: #e4e4e7;
+  --tk-border-strong: #d4d4d8;
+  --tk-accent: #18181b;
+  --tk-accent-fg: #fafafa;
+  --tk-success: #16a34a;
+  --tk-warning: #d97706;
+  --tk-danger: #dc2626;
+  --tk-focus-ring: #2563eb;
+
+  --tk-radius-sm: 4px;
+  --tk-radius: 6px;
+  --tk-radius-md: 8px;
+  --tk-radius-lg: 12px;
+
+  --tk-container: 1100px;
+  --tk-header-h: 64px;
+
+  --tk-font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+/* ------------------------------------------------------------------ */
+/* Design tokens (dark) — auto via prefers-color-scheme               */
+/* ------------------------------------------------------------------ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tk-bg: #0a0a0a;
+    --tk-surface: #111111;
+    --tk-surface-alt: #1a1a1a;
+    --tk-text-primary: #fafafa;
+    --tk-text-secondary: #a1a1aa;
+    --tk-text-tertiary: #71717a;
+    --tk-border: #27272a;
+    --tk-border-strong: #3f3f46;
+    --tk-accent: #fafafa;
+    --tk-accent-fg: #0a0a0a;
+    --tk-success: #22c55e;
+    --tk-warning: #f59e0b;
+    --tk-danger: #ef4444;
+    --tk-focus-ring: #60a5fa;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Tailwind v4 — expose design tokens as theme variables               */
+/* ------------------------------------------------------------------ */
+@theme inline {
+  --color-bg: var(--tk-bg);
+  --color-surface: var(--tk-surface);
+  --color-surface-alt: var(--tk-surface-alt);
+  --color-text-primary: var(--tk-text-primary);
+  --color-text-secondary: var(--tk-text-secondary);
+  --color-text-tertiary: var(--tk-text-tertiary);
+  --color-border: var(--tk-border);
+  --color-border-strong: var(--tk-border-strong);
+  --color-accent: var(--tk-accent);
+  --color-accent-fg: var(--tk-accent-fg);
+  --color-success: var(--tk-success);
+  --color-warning: var(--tk-warning);
+  --color-danger: var(--tk-danger);
+  --color-focus-ring: var(--tk-focus-ring);
+
+  --radius-sm: var(--tk-radius-sm);
+  --radius-md: var(--tk-radius);
+  --radius-lg: var(--tk-radius-md);
+  --radius-xl: var(--tk-radius-lg);
+
+  --font-sans: var(--tk-font-sans);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+html,
+body {
+  background-color: var(--tk-bg);
+  color: var(--tk-text-primary);
+  font-family: var(--tk-font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+*,
+*::before,
+*::after {
+  border-color: var(--tk-border);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Accessible focus ring (applies to any focusable element with .tk-focus) */
+:where(button, a, [role="button"], [tabindex]):focus-visible {
+  outline: 2px solid var(--tk-focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Utility: visually hidden (accessible to screen readers) */
+.tk-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
