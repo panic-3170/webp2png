@@ -9,6 +9,18 @@ const props = defineProps<{
   badge?: string
   disabled?: boolean
 }>()
+
+function onMouseOver(e: MouseEvent) {
+  if (!props.disabled) {
+    (e.currentTarget as HTMLElement).style.borderColor = 'var(--tk-border-strong)'
+  }
+}
+
+function onMouseLeave(e: MouseEvent) {
+  if (!props.disabled) {
+    (e.currentTarget as HTMLElement).style.borderColor = 'var(--tk-border)'
+  }
+}
 </script>
 
 <template>
@@ -22,8 +34,8 @@ const props = defineProps<{
       padding: '24px',
       opacity: disabled ? 0.6 : 1,
     }"
-    @mouseover="(e) => { if (!disabled) (e.currentTarget as HTMLElement).style.borderColor = 'var(--tk-border-strong)' }"
-    @mouseleave="(e) => { if (!disabled) (e.currentTarget as HTMLElement).style.borderColor = 'var(--tk-border)' }"
+    @mouseover="onMouseOver"
+    @mouseleave="onMouseLeave"
   >
     <div class="flex items-start justify-between gap-2 mb-3">
       <component

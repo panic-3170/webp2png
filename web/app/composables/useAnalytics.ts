@@ -14,7 +14,7 @@ export const useAnalytics = () => {
     if (!enabled) return
 
     // Plausible custom event API
-    const plausible = (window as any).plausible
+    const plausible = (window as Window & { plausible?: (name: string, opts?: { props?: Record<string, unknown> }) => void }).plausible
     if (typeof plausible === 'function') {
       try {
         plausible(name, { props: payload })
@@ -26,7 +26,6 @@ export const useAnalytics = () => {
 
     // Dev fallback
     if (import.meta.dev) {
-      // eslint-disable-next-line no-console
       console.debug('[analytics]', name, payload ?? {})
     }
   }

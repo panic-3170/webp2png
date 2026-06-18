@@ -36,7 +36,7 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ['@nuxtjs/sitemap'],
+  modules: ['@nuxtjs/sitemap', '@nuxt/eslint'],
 
   site: {
     url: 'https://toolkit.run',
