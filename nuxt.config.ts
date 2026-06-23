@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   // 全局 app config（站点信息）
   runtimeConfig: {
     public: {
-      siteUrl: 'https://panic-3170.github.io/webp2png',
+      siteUrl: 'https://kit.apppss.com',
       siteName: 'ToolKit',
       adsenseId: '',
     },
@@ -39,13 +39,13 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/sitemap', '@nuxt/eslint'],
 
   site: {
-    url: 'https://panic-3170.github.io/webp2png',
+    url: 'https://kit.apppss.com',
     name: 'ToolKit.run',
     description: 'Free, private, browser-based online tools. No uploads, no signup.',
   },
 
   app: {
-    baseURL: '/webp2png/',
+    baseURL: '/',
     head: {
       htmlAttrs: { lang: 'en' },
       meta: [
